@@ -15,19 +15,23 @@ export default function Modal({ onClose, ...props }) {
     if (e.code === 'Escape') {
       console.log('ККликнул по Ескейпу');
       onClose();
-      window.removeEventListener('keydown', handleKeydown);
+      // window.removeEventListener('keydown', handleKeydown);
     }
   };
 
   const handleOverlayClick = e => {
     if (e.target === e.currentTarget) {
       onClose();
-      window.removeEventListener('keydown', handleKeydown);
+      // window.removeEventListener('keydown', handleKeydown);
     }
   };
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeydown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeydown);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
