@@ -6,34 +6,26 @@ import Loader from 'components/Loader/Loader';
 const modalRoot = document.querySelector('#modal-root');
 
 export default function Modal({ onClose, ...props }) {
-  // componentWillUnmount() {
-  //   // console.log('componentWillUnmount');
-  //   window.removeEventListener('keydown', this.handleKeydown);
-  // }
-
-  const handleKeydown = e => {
-    if (e.code === 'Escape') {
-      console.log('ККликнул по Ескейпу');
-      onClose();
-      // window.removeEventListener('keydown', handleKeydown);
-    }
-  };
-
   const handleOverlayClick = e => {
     if (e.target === e.currentTarget) {
       onClose();
-      // window.removeEventListener('keydown', handleKeydown);
     }
   };
 
   useEffect(() => {
+    const handleKeydown = e => {
+      if (e.code === 'Escape') {
+        console.log('ККликнул по Ескейпу');
+        onClose();
+      }
+    };
+
     window.addEventListener('keydown', handleKeydown);
 
     return () => {
       window.removeEventListener('keydown', handleKeydown);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return createPortal(
     <div className={s.overlay} onClick={handleOverlayClick}>
